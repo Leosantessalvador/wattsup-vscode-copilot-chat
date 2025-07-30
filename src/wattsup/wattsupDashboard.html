@@ -434,7 +434,9 @@
 					document.getElementById('totalTokens').textContent =
 						noDigitsFormatter.format(totals.output_token);
 					document.getElementById('totalCount').textContent =
-						noDigitsFormatter.format(totals.count);
+						formatNumber(totals.count);
+
+					updateEquivalences();
 				}
 
 				function updateModelSelect() {
