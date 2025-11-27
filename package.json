@@ -1,8 +1,8 @@
 {
 	"name": "copilot-chat",
-	"displayName": "GitHub Copilot Chat",
+	"displayName": "GitHub Copilot Chat (Wattsup)",
 	"description": "AI chat features powered by Copilot",
-	"version": "0.33.3",
+	"version": "99.5.0",
 	"build": "1",
 	"internalAIKey": "1058ec22-3c95-4951-8443-f26c1f325911",
 	"completionsCoreVersion": "1.378.1799",
@@ -2304,6 +2304,14 @@
 				"title": "Change Completions Model",
 				"category": "GitHub Copilot",
 				"enablement": "github.copilot.extensionUnification.activated && !isWeb"
+			},
+			{
+				"command": "wattsup.exportUsage",
+				"title": "Wattsup: Export usage data to CSV"
+			},
+			{
+				"command": "wattsup.recomputeEstimatedUsage",
+				"title": "Wattsup: Recompute estimated usage"
 			}
 		],
 		"configuration": [
@@ -4105,6 +4113,14 @@
 					"when": "chatEntitlementSignedOut || !chatIsEnabled",
 					"icon": "$(copilot)"
 				}
+			],
+			"copilot-wattsup": [
+				{
+					"id": "copilot-wattsup",
+					"name": "Dashboard",
+					"icon": "assets/wattsup.svg",
+					"type": "webview"
+				}
 			]
 		},
 		"viewsContainers": {
@@ -4118,6 +4134,11 @@
 					"id": "context-inspector",
 					"title": "Language Context Inspector",
 					"icon": "$(inspect)"
+				},
+				{
+					"id": "copilot-wattsup",
+					"title": "Wattsup",
+					"icon": "assets/wattsup.svg"
 				}
 			]
 		},
@@ -4593,6 +4614,8 @@
 		"@xterm/headless": "^5.5.0",
 		"ajv": "^8.17.1",
 		"applicationinsights": "^2.9.7",
+		"arquero": "^8.0.3",
+		"chart.js": "^4.5.1",
 		"diff": "^8.0.2",
 		"ignore": "^7.0.5",
 		"isbinaryfile": "^5.0.4",

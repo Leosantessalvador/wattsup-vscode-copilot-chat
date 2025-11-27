@@ -56,9 +56,16 @@ rm src/wattsup/data/electricity_mixes.csv
 
 ### Synchronizing upstream releases
 
-In order to properly sync commits from an upstream release, we first need to fetch the tags and then merge the commit at the tip of the tag reference such as:
+In order to properly sync commits from an upstream release, we first need to fetch the tags, create a local branch for that tag and then merge the commit in the target `wattsup` branch:
 
 ```
-git fetch upstream refs/tags/v0.30.1
-git merge --no-ff v0.30.1^{}
+# 1. Fetch new upstream tag
+git fetch upstream --tags
+
+# 2. Create/update local branch that matches the upstream tag
+git switch -C upstream-v0.34.0 v0.34.0
+
+# 3. Merge upstream release into your branch
+git switch wattsup
+git merge --no-ff upstream-v0.34.0
 ```
