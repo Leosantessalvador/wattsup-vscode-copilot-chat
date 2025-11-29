@@ -44,7 +44,7 @@ export function findProviderByModel(modelName: string): string | undefined {
 	} else if (lowerModelName.startsWith('claude-')) {
 		return 'anthropic';
 	} else if (lowerModelName.startsWith('gemini-')) {
-		return 'google';
+		return 'google_genai';
 	}
 }
 
