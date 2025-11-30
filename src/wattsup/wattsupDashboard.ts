@@ -2,7 +2,7 @@ import fs from 'fs';
 import * as vscode from 'vscode';
 import { IExtensionContribution } from '../extension/common/contributions';
 import { IVSCodeExtensionContext } from '../platform/extContext/common/extensionContext';
-import { ILoggedRequestInfo, IRequestLogger, LoggedInfoKind } from '../platform/requestLogger/node/requestLogger';
+import { ILoggedRequestInfo, IRequestLogger, LoggedInfoKind, LoggedRequestKind } from '../platform/requestLogger/node/requestLogger';
 import { IntervalTimer } from '../util/vs/base/common/async';
 import { Disposable } from '../util/vs/base/common/lifecycle';
 import { findModel, findProviderByModel, llmImpact } from './llmImpact';
@@ -163,13 +163,15 @@ export class WattsupDashboard extends Disposable implements vscode.WebviewViewPr
 		const requests = await this.requestLogger.getRequests()
 		const formattedRequests = requests
 			.filter(request => request.kind === LoggedInfoKind.Request)
+			.filter(request => (request.entry as any)?.type === LoggedRequestKind.ChatMLSuccess)
 			.filter(request => !this._processedRequests.includes(request.id))
 			.map((request: ILoggedRequestInfo) => {
 				const data: Partial<Usage> = {};
 				const entry = request.entry as any;
 				data.id = request.id;
+
 				data.timestamp = entry.startTime?.getTime() || 0;
-				data.model = entry.chatParams?.model || 'unknown';
+				data.model = entry.result?.resolvedModel || entry.chatParams?.model || 'unknown';
 				data.input_token = entry.usage?.prompt_tokens || 0;
 				data.output_token = entry.usage?.completion_tokens || 0;
 				data.latency = (entry.endTime && entry.startTime) ? entry.endTime - entry.startTime : 0;
