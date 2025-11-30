@@ -377,12 +377,14 @@ export class WattsupUsageDatabase extends Disposable {
 			});
 		}
 
-		const usageTotals = groupedUsage.rollup({
-			energy_total: (d: any) => aq.op.sum(d.energy_total),
-			gwp_total: (d: any) => aq.op.sum(d.gwp_total),
-			output_token_total: (d: any) => aq.op.sum(d.output_token_total),
-			count: (d: any) => aq.op.sum(d.count)
-		}).objects()[0] as any;
+		const usageTotals = data.length === 0 ?
+			{ energy_total: 0, gwp_total: 0, output_token_total: 0, count: 0 }
+			: groupedUsage.rollup({
+				energy_total: (d: any) => aq.op.sum(d.energy_total),
+				gwp_total: (d: any) => aq.op.sum(d.gwp_total),
+				output_token_total: (d: any) => aq.op.sum(d.output_token_total),
+				count: (d: any) => aq.op.sum(d.count)
+			}).objects()[0] as any;
 
 		const equivalences = equivalencesData.filter(eq => eq.enabled).map(eq => ({
 			equivalence: eq,

@@ -7,7 +7,7 @@
 			body {
 				padding: 0 16px 0 16px;
 				color: var(--vscode-foreground);
-				font-family: var(--vscode-fon	t-family);
+				font-family: var(--vscode-font-family);
 				font-size: var(--vscode-font-size);
 				line-height: 1.6;
 			}
@@ -353,7 +353,9 @@
 						equivalenceBox.className = 'equivalence-box';
 
 						let formattedValue;
-						if (equivalentValue < 1) {
+						if (equivalentValue === 0) {
+							formattedValue = '0';
+						} else if (equivalentValue < 1) {
 							formattedValue = equivalentValue.toFixed(2);
 						} else if (equivalentValue < 10) {
 							formattedValue = equivalentValue.toFixed(1);
