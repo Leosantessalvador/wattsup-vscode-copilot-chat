@@ -4,7 +4,7 @@
 
 Wattsup with Github Copilot allows you to monitor AI requests usage with the integrated Wattsup dashboard, giving quick access to key metrics such as output token usage and CO2 emission equivalences over different time periods.
 
-![Wattsup preview screenshot](wattsup-screenshot.png)
+![Wattsup preview screenshot](https://github.com/ucodia/wattsup-vscode-copilot-chat/blob/wattsup/wattsup-screenshot.png?raw=true)
 
 ## Installation
 
