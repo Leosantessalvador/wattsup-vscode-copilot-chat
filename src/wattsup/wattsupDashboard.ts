@@ -227,7 +227,7 @@ export class WattsupDashboard extends Disposable implements vscode.WebviewViewPr
 			if (this._webviewView) {
 				this._webviewView.webview.postMessage({
 					type: 'wattsupDataRefreshed',
-					data: statsData
+					data: { ...statsData, period: this._currentPeriod }
 				});
 			}
 		} catch (error) {
