@@ -163,15 +163,18 @@ export class WattsupDashboard extends Disposable implements vscode.WebviewViewPr
 		const requests = await this.requestLogger.getRequests()
 		const formattedRequests = requests
 			.filter(request => request.kind === LoggedInfoKind.Request)
-			.filter(request => (request.entry as any)?.type === LoggedRequestKind.ChatMLSuccess)
-			.filter(request => !this._processedRequests.includes(request.id))
+			.filter(request => !this._processedRequests.includes(request.id) &&
+				(request.entry as any)?.type === LoggedRequestKind.ChatMLSuccess)
 			.map((request: ILoggedRequestInfo) => {
 				const data: Partial<Usage> = {};
 				const entry = request.entry as any;
 				data.id = request.id;
 
 				data.timestamp = entry.startTime?.getTime() || 0;
-				data.model = entry.result?.resolvedModel || entry.chatParams?.model || 'unknown';
+
+				// use resolved model for auto-completion instead of model
+				data.model = entry.chatParams?.model.startsWith('copilot-nes') ?
+					entry.result?.resolvedModel : entry.chatParams?.model || 'unknown';
 				data.input_token = entry.usage?.prompt_tokens || 0;
 				data.output_token = entry.usage?.completion_tokens || 0;
 				data.latency = (entry.endTime && entry.startTime) ? entry.endTime - entry.startTime : 0;
